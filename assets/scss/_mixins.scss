@@ -1,0 +1,50 @@
+@mixin breakpoint-mobile {
+  @media (max-width: 720px) {
+    @content;
+  }
+}
+
+@mixin gradient-text($from, $to) {
+  background: linear-gradient(90deg, $from, $to);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@mixin section-splash($blob1, $blob2) {
+  background-image:
+    radial-gradient(circle at 15% 20%, $blob1 0%, transparent 45%),
+    radial-gradient(circle at 85% 75%, $blob2 0%, transparent 50%);
+}
+
+@mixin glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+}
+
+@mixin shimmer-text($from, $to) {
+  background: linear-gradient(100deg, $from, $to, $from);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 6s linear infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    background-position: 0% center;
+  }
+}
+
+@keyframes shimmer {
+  to {
+    background-position: -200% center;
+  }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}

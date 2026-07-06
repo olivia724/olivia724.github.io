@@ -1,0 +1,54 @@
+// Farb-Tokens als CSS Custom Properties.
+// Varianten A/B/C werden nur hier über [data-theme-variant] umgeschaltet -
+// keine andere SCSS-Datei muss für die Mockup-Auswahl angefasst werden.
+
+:root {
+  // --- Variante A: Steel/Blue (kühl, zurückhaltend) --------------------
+  --color-bg-light: #f4f5f6;
+  --color-text-light: #1a1a1a;
+  --color-text-light-muted: #6b7076;
+
+  --splash-light-1: #dfe3e6;
+  --splash-light-2: #c9d2d8;
+
+  --color-bg-dark: #0b0e12;
+  --color-text-dark: #f2f3f4;
+  --color-text-dark-muted: #8a9096;
+
+  --accent-blue: #3d6fd9;
+  --accent-blue-tint: #8fb0f0;
+  --accent-splash-1: #4a5a72;
+  --accent-splash-2: #2e8f8a;
+
+  --font-base: "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  --glass-bg: rgba(127, 127, 127, 0.08);
+  --glass-border: rgba(127, 127, 127, 0.22);
+
+  // Kräftiges, dunkleres Blau für den Werdegang-Hover-Glow - bewusst variantenunabhängig,
+  // damit der Text auch auf hellem Hintergrund gut lesbar bleibt (die dezenten Akzent-Blautöne
+  // der Varianten sind dafür zu blass).
+  --glow-blue-strong: #0f2a8f;
+}
+
+// --- Variante B: Wow (warme Farbspritzer hell, elektrisches Blau + Magenta dunkel) ---
+:root[data-theme-variant="b"] {
+  --splash-light-1: #eae3da;
+  --splash-light-2: #f0d9c9;
+
+  --accent-blue: #4f7cff;
+  --accent-blue-tint: #a9bdff;
+  --accent-splash-1: #ff5f6d;
+  --accent-splash-2: #5ffbf1;
+}
+
+// --- Variante C: Mitte (entsättigter Splash hell, Blau + Türkis dunkel) ---
+:root[data-theme-variant="c"] {
+  --splash-light-1: #e6e8e6;
+  --splash-light-2: #d7e2e0;
+
+  --accent-blue: #4a8fd9;
+  --accent-blue-tint: #9cc4ef;
+  --accent-splash-1: #2f6f7a;
+  --accent-splash-2: #58c9b9;
+}

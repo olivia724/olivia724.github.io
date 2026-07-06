@@ -1,0 +1,371 @@
+// --- Nav ---------------------------------------------------------------
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 0;
+
+  &__list {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__link {
+    text-decoration: none;
+    font-weight: 600;
+  }
+}
+
+// --- Buttons -------------------------------------------------------------
+.button {
+  display: inline-block;
+  padding: 0.75rem 1.75rem;
+  border-radius: 999px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  background: linear-gradient(120deg, var(--accent-blue), var(--accent-splash-2));
+  background-size: 160% auto;
+  color: #fff;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background-position 0.4s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    background-position: right center;
+    box-shadow: 0 8px 24px -8px var(--accent-blue);
+  }
+}
+
+// --- Cards / trait boxes --------------------------------------------------
+.card {
+  @include glass;
+  position: relative;
+  overflow: hidden;
+  padding: 1.75rem;
+  border-radius: 16px;
+  transition: transform 0.2s ease, border-color 0.25s ease;
+  will-change: transform;
+  --mx: 50%;
+  --my: 50%;
+
+  // dezente animierte Akzentlinie oben am Panel
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    z-index: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-splash-1), var(--accent-blue));
+    background-size: 200% auto;
+    animation: shimmer 10s linear infinite;
+    opacity: 0.6;
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+
+  // Liquid-Glow, der der Maus mit sanfter Verzögerung folgt (main.js aktualisiert --mx/--my)
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: radial-gradient(
+      280px circle at var(--mx) var(--my),
+      color-mix(in srgb, var(--glow-blue-strong) 55%, transparent) 0%,
+      color-mix(in srgb, var(--glow-blue-strong) 35%, transparent) 45%,
+      transparent 72%
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  &:hover::after {
+    opacity: 1;
+  }
+
+  &__icon,
+  &__title,
+  & > p {
+    position: relative;
+    z-index: 1;
+  }
+
+  &__title {
+    margin-bottom: 0.5rem;
+  }
+}
+
+// --- Tag / pill (Skills-Grid) ---------------------------------------------
+.tag {
+  display: block;
+  text-align: center;
+  padding: 0.6rem 0.75rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: rgba(127, 127, 127, 0.08);
+  border: 1px solid rgba(127, 127, 127, 0.18);
+  transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+
+  // Weisser "Nebelstich" statt reiner Randfarbe - bleibt so auch auf wechselnden
+  // Hintergrundfarben (hell/dunkel je nach Scrollposition) gut sichtbar.
+  &:hover {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.16);
+    border-color: var(--glow-blue-strong);
+    box-shadow: 0 6px 20px -6px var(--glow-blue-strong);
+  }
+
+  // Wird per JS kurz gesetzt, wenn ein Marquee-Keyword oben angeklickt wurde
+  &--flash {
+    animation: tag-flash 1.8s ease;
+  }
+}
+
+@keyframes tag-flash {
+  0%, 100% {
+    transform: translateY(0);
+    background: rgba(127, 127, 127, 0.08);
+    border-color: rgba(127, 127, 127, 0.18);
+    box-shadow: none;
+  }
+  15%, 60% {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.16);
+    border-color: var(--glow-blue-strong);
+    box-shadow: 0 0 24px color-mix(in srgb, var(--glow-blue-strong) 75%, transparent);
+  }
+}
+
+// --- "..." Tag mit Tooltip (weitere Skills nur im Gespräch) -----------------
+.tag--more {
+  position: relative;
+  cursor: help;
+
+  &::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    z-index: 10;
+    width: max-content;
+    max-width: 220px;
+    transform: translate(-50%, 4px);
+    background: var(--color-bg-dark);
+    color: #fff;
+    padding: 0.6rem 0.9rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    line-height: 1.4;
+    text-align: center;
+    box-shadow: 0 12px 28px -10px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+
+  &:hover::after,
+  &:focus-visible::after {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+// --- Marquee (Skills-Ticker) -----------------------------------------------
+.marquee {
+  overflow: hidden;
+  position: relative;
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+
+  &__track {
+    display: flex;
+    gap: 3rem;
+    width: max-content;
+    animation: marquee 24s linear infinite;
+    white-space: nowrap;
+    font-weight: 400;
+    font-size: clamp(1.25rem, 3vw, 2rem);
+    letter-spacing: 0.02em;
+  }
+
+  // Dezenter, schnellerer Schimmer statt Vollton - bewusst gedämpfter als der
+  // Namensschriftzug, damit die Aufmerksamkeit bei Name/Tagline bleibt.
+  &__item {
+    @include shimmer-text(color-mix(in srgb, var(--color-text-dark-muted) 80%, #fff 20%), color-mix(in srgb, var(--color-text-dark-muted) 55%, var(--accent-blue) 45%));
+    animation-duration: 3s;
+  }
+
+  &__item--link {
+    cursor: pointer;
+    text-decoration: none;
+    transition: text-shadow 0.25s ease;
+
+    &:hover,
+    &:focus-visible {
+      text-shadow: 0 0 8px var(--glow-blue-strong), 0 0 18px color-mix(in srgb, var(--glow-blue-strong) 65%, transparent);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee__track {
+      animation: none;
+    }
+  }
+}
+
+// --- Timeline --------------------------------------------------------------
+.timeline {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.timeline__entry {
+  padding-block: 0.5rem;
+  transform: scale(1);
+  transition: transform 0.4s ease;
+
+  .timeline__role,
+  .timeline__meta,
+  .timeline__meta span {
+    transition: color 0.4s ease, text-shadow 0.4s ease;
+  }
+
+  &--active {
+    transform: scale(1.03);
+
+    .timeline__role,
+    .timeline__meta,
+    .timeline__meta span {
+      color: #fff;
+      text-shadow: 0 0 3px var(--glow-blue-strong),
+        0 0 8px var(--glow-blue-strong),
+        0 0 16px color-mix(in srgb, var(--glow-blue-strong) 90%, transparent);
+    }
+
+    .timeline__company {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+  }
+}
+
+.timeline__role {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.timeline__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: baseline;
+  margin-top: 0.25rem;
+}
+
+.timeline__company {
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  color: var(--color-text-light-muted);
+
+  [data-theme="dark"] & {
+    color: var(--color-text-dark-muted);
+  }
+}
+
+// Zusätzlicher, bewusst zurückhaltender Eintrag für die Zeit vor der IT -
+// keine data-id, damit er nie durch Skill-Hover/Marquee-Klicks hervorgehoben wird.
+.timeline__entry--prior {
+  margin-top: 0.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(127, 127, 127, 0.18);
+
+  .timeline__role {
+    font-size: 0.95rem;
+    color: var(--color-text-light-muted);
+
+    [data-theme="dark"] & {
+      color: var(--color-text-dark-muted);
+    }
+  }
+}
+
+.timeline__prior-text {
+  max-width: 55ch;
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--color-text-light-muted);
+
+  [data-theme="dark"] & {
+    color: var(--color-text-dark-muted);
+  }
+}
+
+
+// --- Form ------------------------------------------------------------------
+.form-field {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(127, 127, 127, 0.3);
+  background: transparent;
+  color: inherit;
+  font-family: inherit;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+
+  &:hover,
+  &:focus {
+    background: rgba(127, 127, 127, 0.16);
+    border-color: rgba(127, 127, 127, 0.5);
+    transition-duration: 0.1s;
+  }
+}
+
+.form-status {
+  margin-top: 1rem;
+  font-weight: 600;
+
+  &--success {
+    color: var(--accent-splash-2);
+  }
+
+  &--error {
+    color: var(--accent-splash-1);
+  }
+}
+
+// --- Social icons ------------------------------------------------------------
+.icons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+
+  a {
+    display: inline-flex;
+    color: inherit;
+    transition: color 0.2s ease, transform 0.2s ease;
+
+    &:hover {
+      color: var(--accent-blue);
+      transform: translateY(-2px);
+    }
+  }
+
+  svg {
+    width: 22px;
+    height: 22px;
+  }
+}

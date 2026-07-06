@@ -1,0 +1,226 @@
+section[data-theme] {
+  padding-block: 5rem;
+}
+
+// --- Hero --------------------------------------------------------------------
+// Kein Vanta/WebGL - eigene, leichte Kombi aus Cursor-Glow + driftenden Farb-Orbs
+// (site-fx.js) plus einem magnetischen Partikel-Schwarm auf Canvas2D, in den
+// Website-eigenen Farben (--accent-blue/--accent-splash-2), statt einer Library.
+.hero {
+  position: relative;
+  overflow: hidden;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  background-color: var(--color-bg-dark);
+  --lx: 50%;
+  --ly: 50%;
+
+  // Cursor-Glow
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -10%;
+    z-index: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at var(--lx) var(--ly), color-mix(in srgb, var(--accent-blue) 45%, transparent) 0%, transparent 45%);
+    filter: blur(40px);
+  }
+
+  // Abdunkelnder Scrim, damit Text unabhängig von Orbs/Partikeln lesbar bleibt
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(
+      100deg,
+      color-mix(in srgb, var(--color-bg-dark) 70%, transparent) 0%,
+      color-mix(in srgb, var(--color-bg-dark) 45%, transparent) 45%,
+      color-mix(in srgb, var(--color-bg-dark) 25%, transparent) 75%
+    );
+  }
+
+  &__orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(55px);
+    opacity: 0.45;
+    z-index: 0;
+    pointer-events: none;
+    animation: hero-orb-drift ease-in-out infinite;
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+
+  .hero-swarm {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  &__grid {
+    position: relative;
+    z-index: 2;
+    align-items: center;
+    max-width: 1140px;
+    margin-inline: auto;
+    // Textspalte bewusst breiter als die Foto-Spalte, damit "Olivia Husin" garantiert
+    // einzeilig Platz hat. Verh&auml;ltnis grosszügiger, seit das Foto (440px) breiter ist.
+    grid-template-columns: 1.2fr 1fr;
+
+    @include breakpoint-mobile {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__name {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    white-space: nowrap;
+    @include shimmer-text(var(--color-text-dark), var(--accent-blue));
+  }
+
+  &__tagline {
+    // Reserviert die Endh&ouml;he des Typed.js-Texts, damit die Zeile beim Tippen nicht
+    // w&auml;chst und dadurch das Foto (vertikal zentriert im Grid) nicht mitverschiebt/"zoomt".
+    min-height: 4.7em;
+    font-size: 1.25rem;
+    color: var(--color-text-dark-muted);
+  }
+
+  // Feste Pixelmasse statt relativer Grössen: das Foto kann dadurch nie mehr
+  // "mitwachsen", egal was sich sonst im Grid (Tagline-Höhe etc.) verändert.
+  &__photo {
+    width: 440px;
+    height: 525px;
+    margin-inline: auto;
+    justify-self: center;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 24px 48px -24px rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    animation: hero-photo-fade-in 0.9s ease forwards;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      opacity: 1;
+      animation: none;
+    }
+  }
+}
+
+@keyframes hero-photo-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes hero-orb-drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(7%, -6%) scale(1.15); }
+}
+
+// Typed.js-Schreibcursor an die Akzentfarbe angleichen
+.typed-cursor {
+  color: var(--accent-blue);
+}
+
+// --- About / trait cards -----------------------------------------------------
+// Dezenter Blau/Rosa-Splash, wie ihn vorher der Kontakt-Bereich im Dark-Mode hatte -
+// jetzt hier, weil About/Zitat nach der Scroll-Umkehr die neuen dunklen Sektionen sind.
+.about {
+  @include section-splash(rgba(79, 124, 255, 0.15), rgba(255, 95, 109, 0.08));
+}
+
+.about__intro {
+  margin-bottom: 2.5rem;
+}
+
+.card__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  margin-bottom: 1rem;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    var(--accent-blue) 0%,
+    color-mix(in srgb, var(--accent-blue) 60%, var(--accent-splash-2) 50%) 50%,
+    color-mix(in srgb, var(--accent-blue) 45%, black 60%) 100%
+  );
+  color: #fff;
+  box-shadow: 0 8px 20px -8px color-mix(in srgb, var(--accent-blue) 70%, transparent);
+  animation: card-icon-pulse 4s ease-in-out infinite;
+
+  svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@keyframes card-icon-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+
+// --- Career timeline teaser (Übergangssektion dunkel -> hell) -----------------
+.timeline-section {
+  @include section-splash(var(--splash-light-2), var(--accent-splash-1));
+}
+
+.timeline-layout {
+  grid-template-columns: 2fr 1fr;
+
+  @include breakpoint-mobile {
+    grid-template-columns: 1fr;
+  }
+}
+
+.timeline-skills {
+  h3 {
+    margin-bottom: 1rem;
+  }
+}
+
+// --- Quote / philosophy (steht wieder im dunklen Bereich, vor dem Werdegang) ---
+.quote {
+  @include section-splash(rgba(255, 95, 109, 0.08), rgba(79, 124, 255, 0.15));
+  text-align: center;
+
+  &__heading {
+    font-size: clamp(1.75rem, 5vw, 3rem);
+    @include shimmer-text(var(--accent-blue-tint), var(--accent-splash-2));
+  }
+
+  &__source {
+    color: var(--color-text-light-muted);
+
+    [data-theme="dark"] & {
+      color: var(--color-text-dark-muted);
+    }
+  }
+}
+
+// --- Contact (dunkel) ----------------------------------------------------------
+.contact {
+  @include section-splash(rgba(79, 124, 255, 0.15), rgba(255, 95, 109, 0.08));
+
+  &__grid {
+    align-items: start;
+  }
+}

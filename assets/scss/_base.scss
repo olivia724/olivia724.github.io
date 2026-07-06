@@ -1,0 +1,85 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  // Reserviert immer die Scrollbar-Spur: verhindert, dass zentrierte Inhalte (z.B. der
+  // Hero) seitlich springen, sobald Typed.js die Seite über die Viewport-Höhe wachsen
+  // lässt und dadurch nachträglich eine Scrollbar erscheint.
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+}
+
+:root {
+  --theme-mix: 1; // 0 = hell, 1 = dunkel; startet dunkel, wird von site-fx.js beim Scrollen auf hell gesetzt
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-base);
+  line-height: 1.5;
+  background-color: var(--color-bg-light);
+  color: var(--color-text-light);
+
+  // Weicher, scroll-gebundener Verlauf statt hartem Klassen-Umschalten -
+  // color-mix() interpoliert 1:1 mit der Scrollposition, keine eigene Animation nötig.
+  @supports (background: color-mix(in srgb, red, blue)) {
+    background-color: color-mix(in srgb, var(--color-bg-dark) calc(var(--theme-mix) * 100%), var(--color-bg-light) calc((1 - var(--theme-mix)) * 100%));
+    color: color-mix(in srgb, var(--color-text-dark) calc(var(--theme-mix) * 100%), var(--color-text-light) calc((1 - var(--theme-mix)) * 100%));
+  }
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+h1, h2, h3, h4 {
+  margin: 0 0 0.5em;
+  line-height: 1.2;
+}
+
+p {
+  margin: 0 0 1em;
+}
+
+a {
+  color: inherit;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+// --- Barrierefreiheit: sichtbarer Fokus + Skip-Link -------------------------
+:focus-visible {
+  outline: 2px solid var(--glow-blue-strong);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  top: -3rem;
+  left: 1rem;
+  z-index: 100;
+  padding: 0.6rem 1.1rem;
+  border-radius: 8px;
+  background: var(--color-bg-dark);
+  color: var(--color-text-dark);
+  text-decoration: none;
+  font-weight: 600;
+  transition: top 0.2s ease;
+
+  &:focus-visible {
+    top: 1rem;
+  }
+}

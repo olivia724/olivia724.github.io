@@ -1,0 +1,3 @@
+# Hinweis: Pfad ist auf die lokale XAMPP-Struktur (http://localhost/portfolio_v1_Juni2026/) angepasst.
+# Sobald die Seite auf einer eigenen Domain im Webroot liegt, hier zu "/404.php" aendern.
+ErrorDocument 404 /portfolio_v1_Juni2026/404.php

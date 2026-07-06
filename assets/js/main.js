@@ -1,0 +1,158 @@
+(function () {
+	"use strict";
+
+	// Hinweis: Der Hell/Dunkel-Scroll-Übergang und die Scroll-Reveal-Animationen laufen jetzt
+	// über GSAP ScrollTrigger (siehe assets/js/site-fx.js), nicht mehr über Vanilla-JS hier.
+
+	// --- Trait-Karten: 3D-Tilt + Liquid-Glow, der der Maus mit Verzögerung folgt ---
+	var tiltCards = document.querySelectorAll(".card");
+	var reducedMotionForTilt = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+	if (!reducedMotionForTilt) {
+		tiltCards.forEach(function (card) {
+			var glowTarget = { x: 50, y: 50 };
+			var glowCurrent = { x: 50, y: 50 };
+			var glowRafId = null;
+
+			var animateGlow = function () {
+				glowCurrent.x += (glowTarget.x - glowCurrent.x) * 0.12;
+				glowCurrent.y += (glowTarget.y - glowCurrent.y) * 0.12;
+				card.style.setProperty("--mx", glowCurrent.x + "%");
+				card.style.setProperty("--my", glowCurrent.y + "%");
+
+				if (Math.abs(glowTarget.x - glowCurrent.x) > 0.1 || Math.abs(glowTarget.y - glowCurrent.y) > 0.1) {
+					glowRafId = window.requestAnimationFrame(animateGlow);
+				} else {
+					glowRafId = null;
+				}
+			};
+
+			card.addEventListener("mousemove", function (event) {
+				var rect = card.getBoundingClientRect();
+				var x = (event.clientX - rect.left) / rect.width - 0.5;
+				var y = (event.clientY - rect.top) / rect.height - 0.5;
+				var maxTilt = 6;
+				card.style.transform =
+					"perspective(700px) rotateX(" + (-y * maxTilt).toFixed(2) + "deg) rotateY(" + (x * maxTilt).toFixed(2) + "deg)";
+
+				glowTarget.x = (x + 0.5) * 100;
+				glowTarget.y = (y + 0.5) * 100;
+				if (!glowRafId) {
+					glowRafId = window.requestAnimationFrame(animateGlow);
+				}
+			});
+			card.addEventListener("mouseleave", function () {
+				card.style.transform = "";
+			});
+		});
+	}
+
+	// --- Skill-Tag hover hebt die passende(n) Werdegang-Station(en) hervor ------
+	// activate/deactivate liegen auf dem Tag selbst, damit der Marquee-Klick weiter
+	// unten dieselbe Hervorhebung programmatisch auslösen kann (nicht nur bei Hover).
+	var skillTags = document.querySelectorAll(".tag[data-roles]");
+	skillTags.forEach(function (tagEl) {
+		var ids = tagEl.getAttribute("data-roles").split(/\s+/);
+		var entries = ids
+			.map(function (id) {
+				return document.querySelector('.timeline__entry[data-id="' + id + '"]');
+			})
+			.filter(Boolean);
+
+		tagEl._activateSkill = function () {
+			entries.forEach(function (entry) {
+				entry.classList.add("timeline__entry--active");
+			});
+		};
+		tagEl._deactivateSkill = function () {
+			entries.forEach(function (entry) {
+				entry.classList.remove("timeline__entry--active");
+			});
+		};
+
+		tagEl.addEventListener("mouseenter", tagEl._activateSkill);
+		tagEl.addEventListener("mouseleave", tagEl._deactivateSkill);
+	});
+
+	// --- Marquee-Keywords: Klick springt zur Skill-Sektion und lässt Tag + --------
+	// zugehörige Werdegang-Stationen kurz aufleuchten (gleiche Hervorhebung wie Hover).
+	var marqueeLinks = document.querySelectorAll(".marquee__item--link[data-skill]");
+	if (marqueeLinks.length) {
+		var findTagBySkill = function (skillName) {
+			var tags = document.querySelectorAll(".tag[data-roles]");
+			for (var i = 0; i < tags.length; i++) {
+				if (tags[i].textContent.trim().toLowerCase() === skillName.trim().toLowerCase()) {
+					return tags[i];
+				}
+			}
+			return null;
+		};
+
+		marqueeLinks.forEach(function (link) {
+			link.addEventListener("click", function (event) {
+				event.preventDefault();
+				var tag = findTagBySkill(link.getAttribute("data-skill"));
+				if (!tag) return;
+
+				var target = document.getElementById("werdegang");
+				if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+
+				var flash = function () {
+					tag.classList.add("tag--flash");
+					if (tag._activateSkill) tag._activateSkill();
+					window.setTimeout(function () {
+						tag.classList.remove("tag--flash");
+						if (tag._deactivateSkill) tag._deactivateSkill();
+					}, 1800);
+				};
+
+				if ("onscrollend" in window) {
+					var done = function () {
+						window.removeEventListener("scrollend", done);
+						flash();
+					};
+					window.addEventListener("scrollend", done);
+					window.setTimeout(done, 1200); // Fallback, falls scrollend nicht feuert
+				} else {
+					window.setTimeout(flash, 700);
+				}
+			});
+		});
+	}
+
+	// --- Kontaktformular per fetch() -------------------------------------------
+	var form = document.getElementById("contact-form");
+	var status = document.getElementById("form-status");
+	if (form) {
+		form.addEventListener("submit", function (event) {
+			event.preventDefault();
+			var formData = new FormData(form);
+
+			fetch(form.getAttribute("action"), {
+				method: "POST",
+				body: formData,
+				headers: { Accept: "application/json" }
+			})
+				.then(function (response) {
+					return response.json().then(function (data) {
+						return { ok: response.ok, data: data };
+					});
+				})
+				.then(function (result) {
+					status.hidden = false;
+					if (result.ok && result.data.success) {
+						status.textContent = "Danke für deine Nachricht! Ich melde mich bald.";
+						status.className = "form-status form-status--success";
+						form.reset();
+					} else {
+						status.textContent = result.data.message || "Bitte Eingaben prüfen.";
+						status.className = "form-status form-status--error";
+					}
+				})
+				.catch(function () {
+					status.hidden = false;
+					status.textContent = "Senden fehlgeschlagen. Bitte später erneut versuchen.";
+					status.className = "form-status form-status--error";
+				});
+		});
+	}
+})();
