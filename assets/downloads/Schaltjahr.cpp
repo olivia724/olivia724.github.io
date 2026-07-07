@@ -9,10 +9,13 @@
 # Autor:        Olivia Husin
 # Copyright:    Olivia Husin
 #
-# Aenderungen:	Am 03.05.2021 -> do-while eingebaut für eine erneute Abfrage
+# Aenderungen:	Am 03.05.2021 -> do-while eingebaut fÃ¼r eine erneute Abfrage
+#				Am 07.07.2026 -> Eingabevalidierung ergaenzt (nur Zahlen erlaubt),
+#				                 Bug in der while-Bedingung behoben ('j' || 'J')
 #
 #########################################################################################################################*/
 #include <iostream>
+#include <limits>
 using namespace std;
 
 int main()
@@ -26,7 +29,12 @@ int main()
 	    
 	    
 	    cout << "Geben Sie eine vierstellige Jahreszahl ein: " ;
-	    cin >> jahreszahl;
+	    while (!(cin >> jahreszahl))
+	    {
+	        cout << "Ungueltige Eingabe. Bitte nur Zahlen eingeben: ";
+	        cin.clear();
+	        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+	    }
 	
 	    if(jahreszahl % 4 == 0)
 	    {
@@ -47,6 +55,6 @@ int main()
 	    cin >> eingabe;
 	    
 	}
-	while(eingabe == 'j' || 'J');
+	while(eingabe == 'j' || eingabe == 'J');
 
 }
