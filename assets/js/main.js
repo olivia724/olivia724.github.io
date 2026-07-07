@@ -1,10 +1,9 @@
 (function () {
 	"use strict";
 
-	// Hinweis: Der Hell/Dunkel-Scroll-Übergang und die Scroll-Reveal-Animationen laufen jetzt
-	// über GSAP ScrollTrigger (siehe assets/js/site-fx.js), nicht mehr über Vanilla-JS hier.
+	// theme fade + scroll reveal: see site-fx.js (GSAP)
 
-	// --- Trait-Karten: 3D-Tilt + Liquid-Glow, der der Maus mit Verzögerung folgt ---
+	// card tilt + glow follows mouse
 	var tiltCards = document.querySelectorAll(".card");
 	var reducedMotionForTilt = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 	if (!reducedMotionForTilt) {
@@ -46,9 +45,8 @@
 		});
 	}
 
-	// --- Skill-Tag hover hebt die passende(n) Werdegang-Station(en) hervor ------
-	// activate/deactivate liegen auf dem Tag selbst, damit der Marquee-Klick weiter
-	// unten dieselbe Hervorhebung programmatisch auslösen kann (nicht nur bei Hover).
+	// skill tag hover highlights matching timeline entries
+	// activate/deactivate saved on the tag so the marquee click below can reuse them
 	var skillTags = document.querySelectorAll(".tag[data-roles]");
 	skillTags.forEach(function (tagEl) {
 		var ids = tagEl.getAttribute("data-roles").split(/\s+/);
@@ -73,8 +71,7 @@
 		tagEl.addEventListener("mouseleave", tagEl._deactivateSkill);
 	});
 
-	// --- Marquee-Keywords: Klick springt zur Skill-Sektion und lässt Tag + --------
-	// zugehörige Werdegang-Stationen kurz aufleuchten (gleiche Hervorhebung wie Hover).
+	// marquee click: scroll to skills section, flash tag + matching timeline entries
 	var marqueeLinks = document.querySelectorAll(".marquee__item--link[data-skill]");
 	if (marqueeLinks.length) {
 		var findTagBySkill = function (skillName) {
@@ -111,7 +108,7 @@
 						flash();
 					};
 					window.addEventListener("scrollend", done);
-					window.setTimeout(done, 1200); // Fallback, falls scrollend nicht feuert
+					window.setTimeout(done, 1200); // fallback if scrollend never fires
 				} else {
 					window.setTimeout(flash, 700);
 				}
@@ -119,7 +116,7 @@
 		});
 	}
 
-	// --- Kontaktformular per fetch() -------------------------------------------
+	// contact form: send via fetch()
 	var form = document.getElementById("contact-form");
 	var status = document.getElementById("form-status");
 	if (form) {

@@ -29,7 +29,7 @@ include '../partials/nav.php';
 					<span class="project-card__overlay">Live-Vorschau ansehen</span>
 				</a>
 				<div class="project-card__body">
-					<h3>HTML &amp; CSS – Miniklub-Webseite</h3>
+					<h3>HTML & CSS – Miniklub-Webseite</h3>
 					<p>Im HTML-Modul durfte ich die Miniklub-Webseite rekonstruieren.</p>
 				</div>
 			</article>

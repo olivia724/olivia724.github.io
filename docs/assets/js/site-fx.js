@@ -3,12 +3,11 @@
 
 	var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-	// --- Hero-Hintergrund: Cursor-Glow + magnetischer Partikel-Schwarm ----------
-	// Kein Vanta/WebGL - reines CSS (driftende Orbs, siehe _sections.scss) + Canvas2D,
-	// in den Website-eigenen Farben (--accent-blue/--accent-splash-2).
+	// hero background: cursor glow + magnetic particle swarm
+	// plain CSS (drifting orbs, see _sections.scss) + canvas2d, no WebGL library
 	var heroEl = document.getElementById("hero");
 	if (heroEl) {
-		// Cursor-Glow: --lx/--ly für das ::before im Hero
+		// cursor glow: sets --lx/--ly, used by the hero ::before
 		var glowTarget = { x: 50, y: 50 };
 		var glowCurrent = { x: 50, y: 50 };
 		var glowRaf = null;
@@ -26,7 +25,7 @@
 			if (!glowRaf) glowRaf = window.requestAnimationFrame(animateHeroGlow);
 		});
 
-		// Magnetischer Partikel-Schwarm auf Canvas2D
+		// particle swarm on canvas2d, dots get pulled toward the mouse
 		if (!reducedMotion) {
 			var swarmCanvas = document.createElement("canvas");
 			swarmCanvas.className = "hero-swarm";
@@ -112,9 +111,9 @@
 		}
 	}
 
-	// --- Typed.js für die Hero-Tagline ------------------------------------------
-	// Die Tagline steht als Fallback-Text bereits im Span (no-JS/SEO), Typed.js
-	// liest ihn aus und tippt ihn identisch wieder ein.
+	// Typed.js hero tagline
+	// tagline text already sits in the span as a no-JS fallback, Typed.js reads
+	// it and types it back out the same way
 	var typedTarget = document.getElementById("typed-tagline");
 	if (window.Typed && typedTarget && !reducedMotion) {
 		var taglineText = typedTarget.textContent.trim();
@@ -128,9 +127,9 @@
 		});
 	}
 
-	// --- GSAP ScrollTrigger: Dunkel/Hell-Übergang + Scroll-Reveal ---------------
-	// Bewusst umgekehrt zu vorher: Seite startet dunkel (Hero) und wird zum Ende hin
-	// heller - der Hero selbst ist davon unbeeinflusst (eigene feste Hintergrundfarbe).
+	// GSAP ScrollTrigger: dark-to-light theme fade + scroll reveal
+	// page starts dark and turns lighter toward the end; hero keeps its own fixed
+	// background and is not affected
 	if (window.gsap && window.ScrollTrigger) {
 		gsap.registerPlugin(ScrollTrigger);
 
@@ -149,7 +148,7 @@
 			});
 		}
 
-		// .about__intro hat keine eigene Transform-Nutzung - Fade + Slide-up ist hier sicher.
+		// .about__intro has no own transform, so fade + slide-up is safe here
 		gsap.utils.toArray(".about__intro").forEach(function (el) {
 			if (reducedMotion) {
 				gsap.set(el, { opacity: 1, y: 0 });
@@ -162,9 +161,9 @@
 			);
 		});
 
-		// .card (3D-Tilt per Inline-Style) und .timeline__entry (Hover-Scale per Klasse) nutzen
-		// transform bereits für eigene Interaktionen - Reveal hier bewusst nur über opacity,
-		// damit sich GSAPs Inline-Transform nicht mit Tilt/Hover-Scale beisst.
+		// .card (tilt via inline style) and .timeline__entry (hover scale via class)
+		// already use transform for their own effects, so reveal here uses opacity
+		// only, to avoid clashing with GSAP's inline transform
 		gsap.utils.toArray(".card, .timeline__entry").forEach(function (el, i) {
 			if (reducedMotion) {
 				gsap.set(el, { opacity: 1 });

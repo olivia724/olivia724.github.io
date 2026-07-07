@@ -57,21 +57,21 @@ include 'partials/nav.php';
 				<span class="card__icon" aria-hidden="true">
 					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="16.5" y1="16.5" x2="21" y2="21"></line><path d="M8 11l2 2 4-4"></path></svg>
 				</span>
-				<h3 class="card__title">Analytisch &amp; lösungsorientiert</h3>
+				<h3 class="card__title">Analytisch & lösungsorientiert</h3>
 				<p>Ich gehe Probleme strukturiert an: Von der Datenbank bis zur Oberfläche und bleibe dran, bis die Lösung wirklich sauber ist.</p>
 			</div>
 			<div class="card">
 				<span class="card__icon" aria-hidden="true">
 					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l3 3v15H6z"></path><line x1="9" y1="9" x2="15" y2="9"></line><line x1="9" y1="13" x2="15" y2="13"></line><line x1="9" y1="17" x2="13" y2="17"></line></svg>
 				</span>
-				<h3 class="card__title">Dokumentationsstark &amp; zuverlässig</h3>
+				<h3 class="card__title">Dokumentationsstark & zuverlässig</h3>
 				<p>Nachvollziehbarer Code und verständliche Doku sind für mich kein Nice-to-have, sondern Grundhaltung.</p>
 			</div>
 			<div class="card">
 				<span class="card__icon" aria-hidden="true">
 					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5 5 0 0 0-7.1 0L12 6.3l-1.7-1.7a5 5 0 1 0-7.1 7.1L12 20.3l8.8-8.6a5 5 0 0 0 0-7.1z"></path></svg>
 				</span>
-				<h3 class="card__title">Menschlich &amp; vielseitig</h3>
+				<h3 class="card__title">Menschlich & vielseitig</h3>
 				<p>Fast zehn Jahre Erfahrung im Sozial- und Gesundheitswesen geben mir ein Gespür für echte Bedürfnisse – eine Kombination, die man nicht oft findet.</p>
 			</div>
 		</div>
@@ -138,10 +138,10 @@ include 'partials/nav.php';
 				<span class="tag" data-roles="mediamarkt">C#</span>
 				<span class="tag" data-roles="smartfactory">Python</span>
 				<span class="tag" data-roles="sileo smartfactory mediamarkt approom">SQL</span>
-				<span class="tag" data-roles="approom">Trigger &amp; Stored Procedures</span>
+				<span class="tag" data-roles="approom">Trigger & Stored Procedures</span>
 				<span class="tag" data-roles="sileo smartfactory mediamarkt approom">REST</span>
 				<span class="tag" data-roles="sileo smartfactory mediamarkt approom">Git</span>
-				<span class="tag" data-roles="sileo smartfactory mediamarkt approom">HTML &amp; SCSS</span>
+				<span class="tag" data-roles="sileo smartfactory mediamarkt approom">HTML & SCSS</span>
 				<span class="tag" data-roles="smartfactory approom">Vue.js</span>
 				<span class="tag" data-roles="approom">MongoDB</span>
 				<span class="tag" data-roles="smartfactory">PostgreSQL</span>

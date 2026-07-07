@@ -1,9 +1,8 @@
-// Farb-Tokens als CSS Custom Properties.
-// Varianten A/B/C werden nur hier über [data-theme-variant] umgeschaltet -
-// keine andere SCSS-Datei muss für die Mockup-Auswahl angefasst werden.
+// color tokens as CSS custom properties
+// variants a/b/c are switched only here, via [data-theme-variant] on <html>
 
 :root {
-  // --- Variante A: Steel/Blue (kühl, zurückhaltend) --------------------
+  // --- variant a: steel/blue (cool, restrained) --------------------
   --color-bg-light: #f4f5f6;
   --color-text-light: #1a1a1a;
   --color-text-light-muted: #6b7076;
@@ -25,13 +24,12 @@
   --glass-bg: rgba(127, 127, 127, 0.08);
   --glass-border: rgba(127, 127, 127, 0.22);
 
-  // Kräftiges, dunkleres Blau für den Werdegang-Hover-Glow - bewusst variantenunabhängig,
-  // damit der Text auch auf hellem Hintergrund gut lesbar bleibt (die dezenten Akzent-Blautöne
-  // der Varianten sind dafür zu blass).
+  // strong dark blue for the timeline/skill hover glow, same in every variant -
+  // the variant accent blues are too pale to stay readable on a light background
   --glow-blue-strong: #0f2a8f;
 }
 
-// --- Variante B: Wow (warme Farbspritzer hell, elektrisches Blau + Magenta dunkel) ---
+// --- variant b: wow (warm splash light, electric blue + magenta dark) ---
 :root[data-theme-variant="b"] {
   --splash-light-1: #eae3da;
   --splash-light-2: #f0d9c9;
@@ -42,7 +40,7 @@
   --accent-splash-2: #5ffbf1;
 }
 
-// --- Variante C: Mitte (entsättigter Splash hell, Blau + Türkis dunkel) ---
+// --- variant c: middle ground (muted splash light, blue + teal dark) ---
 :root[data-theme-variant="c"] {
   --splash-light-1: #e6e8e6;
   --splash-light-2: #d7e2e0;

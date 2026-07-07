@@ -29,7 +29,7 @@
 	</ul>
 	<p>&copy; <?= date('Y') ?> Olivia Husin</p>
 	<?php if (!empty($impressumUrl)): ?>
-		<p style="margin-top: 0.5rem;"><a href="<?= $impressumUrl ?>" class="nav__link" style="font-size: 0.85rem;">Impressum &amp; Datenschutz</a></p>
+		<p style="margin-top: 0.5rem;"><a href="<?= $impressumUrl ?>" class="nav__link" style="font-size: 0.85rem;">Impressum & Datenschutz</a></p>
 	<?php endif; ?>
 </footer>
 <?php if (!empty($isHome)): ?>

@@ -10,7 +10,7 @@
   }
 }
 
-// --- Projekte -----------------------------------------------------------------
+// --- Projects page -------------------------------------------------------------
 .projects-intro {
   max-width: none;
   margin-bottom: 2.5rem;
@@ -18,7 +18,7 @@
 }
 
 .project-grid {
-  // Alle 4 Projekte nebeneinander statt auto-fit-Umbruch nach 3
+  // show all 4 project cards side by side instead of wrapping after 3
   grid-template-columns: repeat(4, 1fr);
   gap: 1.25rem;
 

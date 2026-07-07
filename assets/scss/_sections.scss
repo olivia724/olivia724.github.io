@@ -2,10 +2,7 @@ section[data-theme] {
   padding-block: 5rem;
 }
 
-// --- Hero --------------------------------------------------------------------
-// Kein Vanta/WebGL - eigene, leichte Kombi aus Cursor-Glow + driftenden Farb-Orbs
-// (site-fx.js) plus einem magnetischen Partikel-Schwarm auf Canvas2D, in den
-// Website-eigenen Farben (--accent-blue/--accent-splash-2), statt einer Library.
+// --- Hero: cursor glow + drifting orbs + particle swarm (site-fx.js) ---------
 .hero {
   position: relative;
   overflow: hidden;
@@ -16,7 +13,7 @@ section[data-theme] {
   --lx: 50%;
   --ly: 50%;
 
-  // Cursor-Glow
+  // cursor glow
   &::before {
     content: "";
     position: absolute;
@@ -27,7 +24,7 @@ section[data-theme] {
     filter: blur(40px);
   }
 
-  // Abdunkelnder Scrim, damit Text unabhängig von Orbs/Partikeln lesbar bleibt
+  // dark scrim so text stays readable over orbs/particles
   &::after {
     content: "";
     position: absolute;
@@ -68,8 +65,7 @@ section[data-theme] {
     align-items: center;
     max-width: 1140px;
     margin-inline: auto;
-    // Textspalte bewusst breiter als die Foto-Spalte, damit "Olivia Husin" garantiert
-    // einzeilig Platz hat. Verh&auml;ltnis grosszügiger, seit das Foto (440px) breiter ist.
+    // text column wider than photo column, so "Olivia Husin" always fits on one line
     grid-template-columns: 1.2fr 1fr;
 
     @include breakpoint-mobile {
@@ -84,15 +80,15 @@ section[data-theme] {
   }
 
   &__tagline {
-    // Reserviert die Endh&ouml;he des Typed.js-Texts, damit die Zeile beim Tippen nicht
-    // w&auml;chst und dadurch das Foto (vertikal zentriert im Grid) nicht mitverschiebt/"zoomt".
+    // reserve final Typed.js text height, so the line does not grow while typing
+    // and shift the photo (vertically centered in the grid)
     min-height: 4.7em;
     font-size: 1.25rem;
     color: var(--color-text-dark-muted);
   }
 
-  // Feste Pixelmasse statt relativer Grössen: das Foto kann dadurch nie mehr
-  // "mitwachsen", egal was sich sonst im Grid (Tagline-Höhe etc.) verändert.
+  // fixed pixel size instead of relative units, so the photo can never grow
+  // when something else in the grid changes (tagline height etc.)
   &__photo {
     width: 440px;
     height: 525px;
@@ -128,14 +124,12 @@ section[data-theme] {
   50% { transform: translate(7%, -6%) scale(1.15); }
 }
 
-// Typed.js-Schreibcursor an die Akzentfarbe angleichen
+// match Typed.js cursor color to the accent color
 .typed-cursor {
   color: var(--accent-blue);
 }
 
 // --- About / trait cards -----------------------------------------------------
-// Dezenter Blau/Rosa-Splash, wie ihn vorher der Kontakt-Bereich im Dark-Mode hatte -
-// jetzt hier, weil About/Zitat nach der Scroll-Umkehr die neuen dunklen Sektionen sind.
 .about {
   @include section-splash(rgba(79, 124, 255, 0.15), rgba(255, 95, 109, 0.08));
 }
@@ -178,7 +172,7 @@ section[data-theme] {
 }
 
 
-// --- Career timeline teaser (Übergangssektion dunkel -> hell) -----------------
+// --- Career timeline (dark to light transition section) ----------------------
 .timeline-section {
   @include section-splash(var(--splash-light-2), var(--accent-splash-1));
 }
@@ -197,7 +191,7 @@ section[data-theme] {
   }
 }
 
-// --- Quote / philosophy (steht wieder im dunklen Bereich, vor dem Werdegang) ---
+// --- Quote / philosophy (dark section) ----------------------------------------
 .quote {
   @include section-splash(rgba(255, 95, 109, 0.08), rgba(79, 124, 255, 0.15));
   text-align: center;
@@ -216,7 +210,7 @@ section[data-theme] {
   }
 }
 
-// --- Contact (dunkel) ----------------------------------------------------------
+// --- Contact (dark section) ---------------------------------------------------
 .contact {
   @include section-splash(rgba(79, 124, 255, 0.15), rgba(255, 95, 109, 0.08));
 

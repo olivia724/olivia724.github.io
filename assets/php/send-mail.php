@@ -1,8 +1,7 @@
 <?php
 declare(strict_types=1);
 
-// Fehlerausgaben duerfen die JSON-Antwort nie kontaminieren (z.B. bei fehlender
-// Mailserver-Konfiguration) - Fehler stattdessen ins PHP-Errorlog schreiben.
+// errors must never leak into the JSON response, log them instead
 ini_set('display_errors', '0');
 ini_set('log_errors', '1');
 
@@ -22,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 	respond(405, ['success' => false, 'message' => 'Methode nicht erlaubt.']);
 }
 
-// Honeypot: Bots füllen versteckte Felder aus - stiller Erfolg ohne Mailversand.
+// honeypot field: bots fill it in, real users never see it - fake success, no mail sent
 if (!empty($_POST['website'])) {
 	respond(200, ['success' => true]);
 }
@@ -39,7 +38,7 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 	respond(422, ['success' => false, 'message' => 'Bitte eine gültige E-Mail-Adresse angeben.']);
 }
 
-// Schutz gegen Header-Injection über Name/E-Mail.
+// block header injection via name/email
 if (preg_match('/[\r\n]/', $name) || preg_match('/[\r\n]/', $email)) {
 	respond(422, ['success' => false, 'message' => 'Ungültige Eingabe.']);
 }

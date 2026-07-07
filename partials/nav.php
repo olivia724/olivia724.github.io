@@ -1,5 +1,5 @@
 <?php
-// Erwartet: $homeUrl, $projekteUrl (relative Pfade je nach Seite)
+// needs: $homeUrl, $projekteUrl (relative paths, differ per page depth)
 ?>
 <a href="#main-content" class="skip-link">Zum Hauptinhalt springen</a>
 <header class="container">

@@ -52,7 +52,7 @@
   --mx: 50%;
   --my: 50%;
 
-  // dezente animierte Akzentlinie oben am Panel
+  // subtle animated accent line at the top of the panel
   &::before {
     content: "";
     position: absolute;
@@ -69,7 +69,7 @@
     }
   }
 
-  // Liquid-Glow, der der Maus mit sanfter Verzögerung folgt (main.js aktualisiert --mx/--my)
+  // glow that follows the mouse (main.js updates --mx/--my)
   &::after {
     content: "";
     position: absolute;
@@ -114,8 +114,7 @@
   border: 1px solid rgba(127, 127, 127, 0.18);
   transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 
-  // Weisser "Nebelstich" statt reiner Randfarbe - bleibt so auch auf wechselnden
-  // Hintergrundfarben (hell/dunkel je nach Scrollposition) gut sichtbar.
+  // white tint instead of a plain border color, stays visible on both light and dark backgrounds
   &:hover {
     transform: translateY(-3px);
     background: rgba(255, 255, 255, 0.16);
@@ -123,7 +122,7 @@
     box-shadow: 0 6px 20px -6px var(--glow-blue-strong);
   }
 
-  // Wird per JS kurz gesetzt, wenn ein Marquee-Keyword oben angeklickt wurde
+  // set briefly by JS after a marquee keyword click
   &--flash {
     animation: tag-flash 1.8s ease;
   }
@@ -144,7 +143,7 @@
   }
 }
 
-// --- "..." Tag mit Tooltip (weitere Skills nur im Gespräch) -----------------
+// --- "..." tag with tooltip (more skills, discuss in person) ---------------
 .tag--more {
   position: relative;
   cursor: help;
@@ -179,7 +178,7 @@
   }
 }
 
-// --- Marquee (Skills-Ticker) -----------------------------------------------
+// --- Marquee (skills ticker) -------------------------------------------------
 .marquee {
   overflow: hidden;
   position: relative;
@@ -197,8 +196,7 @@
     letter-spacing: 0.02em;
   }
 
-  // Dezenter, schnellerer Schimmer statt Vollton - bewusst gedämpfter als der
-  // Namensschriftzug, damit die Aufmerksamkeit bei Name/Tagline bleibt.
+  // faster, more muted shimmer than the name headline, keeps focus on name/tagline
   &__item {
     @include shimmer-text(color-mix(in srgb, var(--color-text-dark-muted) 80%, #fff 20%), color-mix(in srgb, var(--color-text-dark-muted) 55%, var(--accent-blue) 45%));
     animation-duration: 3s;
@@ -281,8 +279,8 @@
   }
 }
 
-// Zusätzlicher, bewusst zurückhaltender Eintrag für die Zeit vor der IT -
-// keine data-id, damit er nie durch Skill-Hover/Marquee-Klicks hervorgehoben wird.
+// extra, muted entry for the time before IT
+// no data-id, so it never gets highlighted by skill hover / marquee clicks
 .timeline__entry--prior {
   margin-top: 0.5rem;
   padding-top: 1.5rem;

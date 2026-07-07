@@ -1,6 +1,6 @@
 <?php
-// Erwartet: $pageTitle (string), $assetPath (z.B. "assets/" oder "../assets/"), $themeVariant (a|b|c)
-// Optional: $pageDescription (string), $canonicalPath (z.B. "/" oder "/pages/projekte.php")
+// needs: $pageTitle, $assetPath ("assets/" or "../assets/"), $themeVariant (a|b|c)
+// optional: $pageDescription, $canonicalPath (e.g. "/" or "/pages/projekte.php")
 header('Content-Type: text/html; charset=utf-8');
 require_once __DIR__ . '/config.php';
 $themeVariant = $themeVariant ?? 'b';

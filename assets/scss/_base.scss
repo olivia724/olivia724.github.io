@@ -6,15 +6,14 @@
 
 html {
   scroll-behavior: smooth;
-  // Reserviert immer die Scrollbar-Spur: verhindert, dass zentrierte Inhalte (z.B. der
-  // Hero) seitlich springen, sobald Typed.js die Seite über die Viewport-Höhe wachsen
-  // lässt und dadurch nachträglich eine Scrollbar erscheint.
+  // always reserve scrollbar space, so centered content does not shift once
+  // Typed.js grows the page and a scrollbar appears
   overflow-y: scroll;
   scrollbar-gutter: stable;
 }
 
 :root {
-  --theme-mix: 1; // 0 = hell, 1 = dunkel; startet dunkel, wird von site-fx.js beim Scrollen auf hell gesetzt
+  --theme-mix: 1; // 0 = light, 1 = dark; starts dark, site-fx.js fades it to light on scroll
 }
 
 body {
@@ -24,8 +23,8 @@ body {
   background-color: var(--color-bg-light);
   color: var(--color-text-light);
 
-  // Weicher, scroll-gebundener Verlauf statt hartem Klassen-Umschalten -
-  // color-mix() interpoliert 1:1 mit der Scrollposition, keine eigene Animation nötig.
+  // smooth scroll-driven fade instead of a hard class switch
+  // color-mix() follows the scroll position directly, no extra animation needed
   @supports (background: color-mix(in srgb, red, blue)) {
     background-color: color-mix(in srgb, var(--color-bg-dark) calc(var(--theme-mix) * 100%), var(--color-bg-light) calc((1 - var(--theme-mix)) * 100%));
     color: color-mix(in srgb, var(--color-text-dark) calc(var(--theme-mix) * 100%), var(--color-text-light) calc((1 - var(--theme-mix)) * 100%));
@@ -59,7 +58,7 @@ a {
   white-space: nowrap;
 }
 
-// --- Barrierefreiheit: sichtbarer Fokus + Skip-Link -------------------------
+// --- accessibility: visible focus + skip link --------------------------------
 :focus-visible {
   outline: 2px solid var(--glow-blue-strong);
   outline-offset: 3px;
