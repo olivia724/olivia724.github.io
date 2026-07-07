@@ -30,12 +30,12 @@ include '../partials/nav.php';
 			Tracking-Tools und setzt keine Cookies.
 		</p>
 		<p>
-			Nutzt du das Kontaktformular, werden Name, E-Mail-Adresse und deine Nachricht ausschliesslich zur
-			Beantwortung deiner Anfrage per E-Mail an mich weitergeleitet. Eine Speicherung in einer Datenbank
+			Nutzt du das Kontaktformular, werden Name, E-Mail-Adresse und Ihre Nachricht ausschliesslich zur
+			Beantwortung Ihrer Anfrage per E-Mail an mich weitergeleitet. Eine Speicherung in einer Datenbank
 			findet nicht statt, eine Weitergabe an Dritte ebenfalls nicht.
 		</p>
 		<p>
-			Bei Fragen zu deinen Daten kannst du dich jederzeit per E-Mail an
+			Bei Fragen zu Ihren Daten kannst du dich jederzeit per E-Mail an
 			<a href="mailto:<?= htmlspecialchars(SITE_EMAIL) ?>"><?= htmlspecialchars(SITE_EMAIL) ?></a> wenden.
 		</p>
 	</div>

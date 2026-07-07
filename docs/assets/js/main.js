@@ -127,7 +127,7 @@
 			var honeypot = form.elements.website;
 			if (honeypot && honeypot.value) {
 				status.hidden = false;
-				status.textContent = "Danke für deine Nachricht! Ich melde mich bald.";
+				status.textContent = "Danke für Ihre Nachricht! Ich melde mich bald.";
 				status.className = "form-status form-status--success";
 				form.reset();
 				return;
@@ -148,7 +148,7 @@
 				.then(function (result) {
 					status.hidden = false;
 					if (result.ok) {
-						status.textContent = "Danke für deine Nachricht! Ich melde mich bald.";
+						status.textContent = "Danke für Ihre Nachricht! Ich melde mich bald.";
 						status.className = "form-status form-status--success";
 						form.reset();
 					} else {

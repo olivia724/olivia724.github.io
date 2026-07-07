@@ -717,6 +717,40 @@ section[data-theme] {
   margin-top: 2rem;
 }
 
+.projects-banner {
+  position: relative;
+  overflow: hidden;
+  --lx: 50%;
+  --ly: 50%;
+}
+.projects-banner::before {
+  content: "";
+  position: absolute;
+  inset: -10%;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at var(--lx) var(--ly), rgba(255, 95, 109, 0.18) 0%, transparent 45%);
+  filter: blur(40px);
+}
+.projects-banner__orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.22;
+  z-index: 0;
+  pointer-events: none;
+  animation: hero-orb-drift ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .projects-banner__orb {
+    animation: none;
+  }
+}
+.projects-banner > .container {
+  position: relative;
+  z-index: 1;
+}
+
 .projects-intro {
   max-width: none;
   margin-bottom: 2.5rem;

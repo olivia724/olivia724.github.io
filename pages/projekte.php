@@ -7,12 +7,16 @@ $homeUrl     = '../index.php';
 $projekteUrl = 'projekte.php';
 $impressumUrl = 'impressum.php';
 $themeVariant = $_GET['variant'] ?? 'a';
+$loadSiteFx = true;
 include '../partials/head.php';
 include '../partials/nav.php';
 ?>
 
 <main id="main-content">
-<section class="cv-section" data-theme="light">
+<section class="cv-section projects-banner" data-theme="light" id="projects-banner">
+	<div class="projects-banner__orb" style="width:320px;height:320px;left:6%;top:10%;background:rgba(255,95,109,0.5);animation-duration:16s;" aria-hidden="true"></div>
+	<div class="projects-banner__orb" style="width:280px;height:280px;left:62%;top:6%;background:rgba(79,124,255,0.5);animation-duration:20s;animation-direction:reverse;" aria-hidden="true"></div>
+	<div class="projects-banner__orb" style="width:240px;height:240px;left:40%;top:55%;background:rgba(46,143,138,0.5);animation-duration:13s;" aria-hidden="true"></div>
 	<div class="container">
 		<a href="<?= $homeUrl ?>" class="button" style="margin-bottom: 2rem; display: inline-block;">&larr; Zurück</a>
 		<h1>Projekte</h1>

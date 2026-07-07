@@ -20,7 +20,7 @@ include 'partials/nav.php';
 	<div class="container grid grid--cols-2 hero__grid">
 		<div>
 			<h1 class="hero__name">Olivia Husin</h1>
-			<p class="hero__tagline"><span id="typed-tagline">Fullstack-Applikationsentwicklerin mit Gespür für saubere Lösungen – und Freude daran, sich in neue Herausforderungen reinzufüchsen.</span></p>
+			<p class="hero__tagline"><span id="typed-tagline">Fullstack-Applikationsentwicklerin – analytisch im Kopf, hartnäckig im Debugging, neugierig auf den REST.</span></p>
 			<a href="#kontakt" class="button">Kontakt aufnehmen</a>
 		</div>
 		<div class="hero__photo">

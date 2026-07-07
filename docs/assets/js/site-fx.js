@@ -3,27 +3,32 @@
 
 	var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+	// cursor glow: sets --lx/--ly on el, used by its ::before gradient
+	// shared by the hero and the projects page banner
+	function initCursorGlow(el) {
+		var glowTarget = { x: 50, y: 50 };
+		var glowCurrent = { x: 50, y: 50 };
+		var glowRaf = null;
+		function animateGlow() {
+			glowCurrent.x += (glowTarget.x - glowCurrent.x) * 0.08;
+			glowCurrent.y += (glowTarget.y - glowCurrent.y) * 0.08;
+			el.style.setProperty("--lx", glowCurrent.x + "%");
+			el.style.setProperty("--ly", glowCurrent.y + "%");
+			glowRaf = window.requestAnimationFrame(animateGlow);
+		}
+		el.addEventListener("mousemove", function (event) {
+			var rect = el.getBoundingClientRect();
+			glowTarget.x = ((event.clientX - rect.left) / rect.width) * 100;
+			glowTarget.y = ((event.clientY - rect.top) / rect.height) * 100;
+			if (!glowRaf) glowRaf = window.requestAnimationFrame(animateGlow);
+		});
+	}
+
 	// hero background: cursor glow + magnetic particle swarm
 	// plain CSS (drifting orbs, see _sections.scss) + canvas2d, no WebGL library
 	var heroEl = document.getElementById("hero");
 	if (heroEl) {
-		// cursor glow: sets --lx/--ly, used by the hero ::before
-		var glowTarget = { x: 50, y: 50 };
-		var glowCurrent = { x: 50, y: 50 };
-		var glowRaf = null;
-		function animateHeroGlow() {
-			glowCurrent.x += (glowTarget.x - glowCurrent.x) * 0.08;
-			glowCurrent.y += (glowTarget.y - glowCurrent.y) * 0.08;
-			heroEl.style.setProperty("--lx", glowCurrent.x + "%");
-			heroEl.style.setProperty("--ly", glowCurrent.y + "%");
-			glowRaf = window.requestAnimationFrame(animateHeroGlow);
-		}
-		heroEl.addEventListener("mousemove", function (event) {
-			var rect = heroEl.getBoundingClientRect();
-			glowTarget.x = ((event.clientX - rect.left) / rect.width) * 100;
-			glowTarget.y = ((event.clientY - rect.top) / rect.height) * 100;
-			if (!glowRaf) glowRaf = window.requestAnimationFrame(animateHeroGlow);
-		});
+		initCursorGlow(heroEl);
 
 		// particle swarm on canvas2d, dots get pulled toward the mouse
 		if (!reducedMotion) {
@@ -109,6 +114,12 @@
 			}
 			swarmFrame();
 		}
+	}
+
+	// projects page banner: same cursor glow, no particle swarm
+	var projectsBannerEl = document.getElementById("projects-banner");
+	if (projectsBannerEl) {
+		initCursorGlow(projectsBannerEl);
 	}
 
 	// Typed.js hero tagline
