@@ -2,7 +2,6 @@
   --color-bg-light: #f4f5f6;
   --color-text-light: #1a1a1a;
   --color-text-light-muted: #6b7076;
-  --splash-light-1: #dfe3e6;
   --splash-light-2: #c9d2d8;
   --color-bg-dark: #0b0e12;
   --color-text-dark: #f2f3f4;
@@ -15,24 +14,6 @@
   --glass-bg: rgba(127, 127, 127, 0.08);
   --glass-border: rgba(127, 127, 127, 0.22);
   --glow-blue-strong: #0f2a8f;
-}
-
-:root[data-theme-variant=b] {
-  --splash-light-1: #eae3da;
-  --splash-light-2: #f0d9c9;
-  --accent-blue: #4f7cff;
-  --accent-blue-tint: #a9bdff;
-  --accent-splash-1: #ff5f6d;
-  --accent-splash-2: #5ffbf1;
-}
-
-:root[data-theme-variant=c] {
-  --splash-light-1: #e6e8e6;
-  --splash-light-2: #d7e2e0;
-  --accent-blue: #4a8fd9;
-  --accent-blue-tint: #9cc4ef;
-  --accent-splash-1: #2f6f7a;
-  --accent-splash-2: #58c9b9;
 }
 
 @keyframes shimmer {

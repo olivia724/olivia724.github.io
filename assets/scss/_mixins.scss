@@ -4,13 +4,6 @@
   }
 }
 
-@mixin gradient-text($from, $to) {
-  background: linear-gradient(90deg, $from, $to);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
 @mixin section-splash($blob1, $blob2) {
   background-image:
     radial-gradient(circle at 15% 20%, $blob1 0%, transparent 45%),

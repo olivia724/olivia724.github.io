@@ -6,7 +6,6 @@ $assetPath   = '../assets/';
 $homeUrl     = '../index.php';
 $projekteUrl = 'projekte.php';
 $impressumUrl = 'impressum.php';
-$themeVariant = $_GET['variant'] ?? 'a';
 include '../partials/head.php';
 include '../partials/nav.php';
 ?>
@@ -29,11 +28,20 @@ include '../partials/nav.php';
 			Diese Seite dient als private Bewerbungs-Teaserseite und erhebt keine Daten über Analyse- oder
 			Tracking-Tools und setzt keine Cookies.
 		</p>
+		<?php if (getenv('BUILDING_STATIC')): ?>
+		<p>
+			Nutzt du das Kontaktformular, werden Name, E-Mail-Adresse und Ihre Nachricht über den Formular-Dienst
+			Web3Forms ausschliesslich zur Beantwortung Ihrer Anfrage per E-Mail an mich weitergeleitet. Eine
+			Speicherung in einer eigenen Datenbank findet nicht statt, eine Weitergabe an Dritte ausserhalb dieser
+			Zustellung ebenfalls nicht.
+		</p>
+		<?php else: ?>
 		<p>
 			Nutzt du das Kontaktformular, werden Name, E-Mail-Adresse und Ihre Nachricht ausschliesslich zur
 			Beantwortung Ihrer Anfrage per E-Mail an mich weitergeleitet. Eine Speicherung in einer Datenbank
 			findet nicht statt, eine Weitergabe an Dritte ebenfalls nicht.
 		</p>
+		<?php endif; ?>
 		<p>
 			Bei Fragen zu Ihren Daten kannst du dich jederzeit per E-Mail an
 			<a href="mailto:<?= htmlspecialchars(SITE_EMAIL) ?>"><?= htmlspecialchars(SITE_EMAIL) ?></a> wenden.

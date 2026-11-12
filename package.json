@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "build:css": "sass assets/scss/main.scss assets/css/main.css --no-source-map",
-    "watch:css": "sass --watch assets/scss/main.scss assets/css/main.css --no-source-map"
+    "watch:css": "sass --watch assets/scss/main.scss assets/css/main.css --no-source-map",
+    "build:docs": "php tools/build-static.php"
   },
   "devDependencies": {
     "sass": "^1.77.0"

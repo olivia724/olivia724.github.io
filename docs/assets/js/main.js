@@ -116,7 +116,7 @@
 		});
 	}
 
-	// contact form: send via fetch() to Web3Forms (no backend on GitHub Pages)
+	// contact form: send via fetch()
 	var form = document.getElementById("contact-form");
 	var status = document.getElementById("form-status");
 	if (form) {
@@ -147,12 +147,12 @@
 				})
 				.then(function (result) {
 					status.hidden = false;
-					if (result.ok) {
+					if (result.ok && result.data.success) {
 						status.textContent = "Danke für Ihre Nachricht! Ich melde mich bald.";
 						status.className = "form-status form-status--success";
 						form.reset();
 					} else {
-						status.textContent = (result.data && result.data.message) || "Bitte Eingaben prüfen.";
+						status.textContent = result.data.message || "Bitte Eingaben prüfen.";
 						status.className = "form-status form-status--error";
 					}
 				})

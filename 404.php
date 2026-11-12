@@ -7,7 +7,6 @@ $assetPath   = 'assets/';
 $homeUrl     = 'index.php';
 $projekteUrl = 'pages/projekte.php';
 $impressumUrl = 'pages/impressum.php';
-$themeVariant = $_GET['variant'] ?? 'a';
 include 'partials/head.php';
 include 'partials/nav.php';
 ?>
@@ -16,7 +15,7 @@ include 'partials/nav.php';
 <section class="cv-section" data-theme="dark">
 	<div class="container" style="text-align:center; padding-block: 4rem;">
 		<h1>404 – Diese Seite gibt es nicht</h1>
-		<p>Der Link scheint nicht (mehr) zu stimmen. Vielleicht hilft dir einer dieser Wege weiter:</p>
+		<p>Der Link stimmt nicht mehr.</p>
 		<p>
 			<a href="<?= $homeUrl ?>" class="button">Zur Startseite</a>
 		</p>

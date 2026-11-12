@@ -122,6 +122,17 @@
 	if (form) {
 		form.addEventListener("submit", function (event) {
 			event.preventDefault();
+
+			// honeypot field: bots that fill every field get a silent fake success
+			var honeypot = form.elements.website;
+			if (honeypot && honeypot.value) {
+				status.hidden = false;
+				status.textContent = "Danke für Ihre Nachricht! Ich melde mich bald.";
+				status.className = "form-status form-status--success";
+				form.reset();
+				return;
+			}
+
 			var formData = new FormData(form);
 
 			fetch(form.getAttribute("action"), {

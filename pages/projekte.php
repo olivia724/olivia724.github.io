@@ -6,7 +6,6 @@ $assetPath   = '../assets/';
 $homeUrl     = '../index.php';
 $projekteUrl = 'projekte.php';
 $impressumUrl = 'impressum.php';
-$themeVariant = $_GET['variant'] ?? 'a';
 $loadSiteFx = true;
 include '../partials/head.php';
 include '../partials/nav.php';
